@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Clash Grotesk", sans-serif;
+      }
+      body {
+        background: #2c2c2c;
+        display: flex;
+        color: #eaeaea;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .frase {
+        /* background-color: red; */
+        overflow: hidden;
+        font-size: 5rem;
+        display: inline-block;
+        position: relative;
+        display: flex;
+      }
+
+      .letter {
+        display: block;
+        animation: comingFromTheBottom 500ms both ease-in-out;
+        animation-delay: calc(var(--i) * 20ms);
+      }
+      @keyframes comingFromTheBottom {
+        0% {
+          transform: translateY(100px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+
+      .call-animation {
+        padding: 10px 20px;
+        border: solid 1px #eaeaea;
+        border-radius: 7px;
+        outline: none;
+        position: absolute;
+        top: 10px;
+        background: transparent;
+        color: #eaeaea;
+        font-size: 18px;
+        cursor: pointer;
+        transition: 0.17s;
+        box-shadow: 0rem 1rem 1rem #0000003d;
+      }
+
+      .call-animation:hover {
+        background-color: #eaeaea;
+        color: #2c2c2c;
+        transform: scale(1.1);
+      }
+      .space {
+        width: 20px;
+      }
+      .form {
+        position: absolute;
+        bottom: 60px;
+      }
+      input {
+        border: solid 1px #ccc;
+        background: transparent;
+        padding: 10px 20px;
+        border-radius: 50px;
+        color: #eaeaea;
+        outline: none;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      #show-result {
+        font-family: Arial, Helvetica, sans-serif;
+        padding: 10px 20px;
+        margin-left: 10px;
+        background: transparent;
+        color: #eaeaea;
+        outline: none;
+        border: solid 1px #ccc;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: 100ms;
+      }
+
+      #show-result:hover {
+        background: #eaeaea;
+        color: #2c2c2c;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="frase">
+        <span class="letter" style="--i: 0;">H</span>
+        <span class="letter" style="--i: 1;">E</span>
+        <span class="letter" style="--i: 2;">L</span>
+        <span class="letter" style="--i: 3;">L</span>
+        <span class="letter" style="--i: 4;">O</span>
+        <span class="letter" style="--i: 5;">&nbsp; &nbsp;</span>
+        <span class="letter" style="--i: 6;">W</span>
+        <span class="letter" style="--i: 7;">O</span>
+        <span class="letter" style="--i: 8;">R</span>
+        <span class="letter" style="--i: 9;">L</span>
+        <span class="letter" style="--i: 10;">D</span>
+        <span class="letter" style="--i: 11;">.</span>
+    </div>
+    <div class="form">
+      <input
+        type="text"
+        id="textInput"
+        autocomplete="off"
+        placeholder="Type here..."
+      />
+      <button id="show-result">Result</button>
+    </div>
+
+    <script>
+      // Form
+      const textInput = document.getElementById("textInput");
+      const formBtn = document.getElementById("show-result");
+      const fraseDiv = document.querySelector(".frase");
+
+      formBtn.addEventListener("click", () => {
+        // Check if the input text has a value
+        if (textInput.value.length === 0) return;
+
+        // Clear the old phrase
+        const spans = document.querySelectorAll(".letter");
+        spans.forEach((span) => {
+          span.remove();
+        });
+
+        // Take the input value
+        let textToArray = textInput.value;
+        const textUpperCased = textToArray.toUpperCase();
+
+        // Take the input value and transform the string into an array, replacing the spaces with ("&nbsp; &nbsp;")
+        let frase = textUpperCased
+          .split("")
+          .map((letter) => (letter === " " ? "&nbsp; &nbsp;" : letter));
+
+        // This 'for' loop is used to create spans with a single letter from the array
+        for (let i = 0; i < frase.length; i++) {
+          const span = document.createElement("span");
+          span.innerHTML = frase[i];
+          span.classList.add("letter");
+          fraseDiv.appendChild(span);
+        }
+
+        // Set custom styles for the letters
+        const setCustomStyle = (element, propertyName, value) => {
+          element.style.setProperty(propertyName, value);
+        };
+
+        const letters = document.querySelectorAll(".letter");
+        letters.forEach((letter, index) => {
+          const customValue = (index += index);
+          setCustomStyle(letter, "--i", customValue.toString());
+        });
+
+        // Clear the old phrase and input value
+        textInput.value = "";
+        frase = [];
+      });
+    </script>
+  </body>
+</html>
