@@ -40,9 +40,8 @@
         let textToArray = textInput.value;
         const textUpperCased = textToArray.toUpperCase();
 
-        // Take the input value and transform the string into an array, replacing the spaces with ("&nbsp; &nbsp;")
+        // Take the input value and transform the string into an array
         let word = textUpperCased.split(" ");
-        console.log(word);
 
         // This 'for' loop is used to create spans with a single letter from the array
         for (let j = 0; j < word.length; j++) {
@@ -77,7 +76,7 @@
 
         // Clear the old phrase and input value
         textInput.value = "";
-        frase = [];
+  
       });
     }, 300); // Set the timeout duration
   });
